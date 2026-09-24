@@ -56,6 +56,14 @@ export class AuthService {
   isLoggedIn(): boolean { return !!localStorage.getItem(this.sessionKey); }
   isAdvogado(): boolean { return this.currentUser()?.tipo === 'advogado'; }
 
+  getUserByEmail(email: string): Usuario | undefined {
+    return this.getUsers().find(u => u.email.toLowerCase() === email.toLowerCase());
+  }
+
+  getAllUsers(): Usuario[] {
+    return this.getUsers().map(({ senha, ...rest }) => ({ ...rest, senha: '' } as Usuario));
+  }
+
   currentUser(): any {
     const raw = localStorage.getItem(this.sessionKey);
     return raw ? JSON.parse(raw) : null;

@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Advogado } from '../../models/advogado.model';
 import { AdvogadoService } from '../../core/services/advogado.service';
+import { AuthService } from '../../core/services/auth.service';
+import { FavoritoService } from '../../core/services/favorito.service';
 
 @Component({
-  selector:'app-advogados', standalone:true, imports:[FormsModule,RouterLink],
+  selector:'app-advogados', standalone:true, imports:[CommonModule,FormsModule,RouterLink],
   template:`
   <section class="page-hero"><div class="container"><div class="eyebrow">PROFISSIONAIS</div><h1>Encontre um advogado</h1><p>Busque por nome, especialidade ou cidade e conheça profissionais de Salvador e região.</p></div></section>
   <section class="section"><div class="container search-layout">
@@ -32,7 +35,7 @@ import { AdvogadoService } from '../../core/services/advogado.service';
               @if(a.anosExperiencia){<span>{{a.anosExperiencia}} anos de experiência</span>}
             </div>
           </div>
-          <a class="btn btn-outline" [routerLink]="['/advogado',a.id]">Ver perfil</a>
+          <div class="row-actions"><button *ngIf="auth.isLoggedIn() && !auth.isAdvogado()" class="heart" [class.saved]="isFavorite(a.id)" (click)="toggleFavorite(a.id)" [attr.aria-label]="isFavorite(a.id) ? 'Remover dos favoritos' : 'Salvar nos favoritos'">{{isFavorite(a.id) ? '♥' : '♡'}}</button><a class="btn btn-outline" [routerLink]="['/advogado',a.id]">Ver perfil</a></div>
         </article>
       } @empty {
         <div class="empty card">Nenhum profissional encontrado com esses filtros.</div>
@@ -41,9 +44,9 @@ import { AdvogadoService } from '../../core/services/advogado.service';
     <p class="demo-note">Os perfis exibidos nesta versão são demonstrativos.</p>
   </div></section>`,
   styles:[`
-    .search-layout{max-width:940px}.filters{padding:14px;display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;box-shadow:none}.search-field{position:relative}.search-field span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#7b8795}.search-field input{padding-left:34px}.result-head{display:flex;justify-content:space-between;align-items:center;margin:26px 2px 12px;color:#687487;font-size:.9rem}.result-head strong{color:#0d2740}.result-head button{border:0;background:none;color:#8c652f;font-weight:800;cursor:pointer}.list{display:grid;gap:12px}.lawyer-row{display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;padding:16px 18px;box-shadow:none}.avatar{width:70px;height:70px;border-radius:10px;background:linear-gradient(145deg,#e5e9ee,#f3f5f7);display:grid;place-items:center;color:#0d2740;font-weight:800;font-size:1.05rem}.body h3{margin:0 0 5px;color:#0d2740;font-size:1.15rem}.specialty{color:#35536f;font-size:.86rem}.body p{color:#758092;margin:5px 0 8px;font-size:.86rem}.extras{display:flex;gap:6px;flex-wrap:wrap}.extras span{font-size:.72rem;padding:4px 7px;border-radius:999px;background:#f4efe7;color:#7a5a2d}.empty{padding:30px;text-align:center;color:#687487}.demo-note{text-align:center;color:#8993a0;font-size:.78rem;margin-top:18px}
-    @media(max-width:820px){.filters{grid-template-columns:1fr 1fr}.filters .search-field{grid-column:1/-1}.lawyer-row{grid-template-columns:64px 1fr}.lawyer-row>.btn{grid-column:1/-1}.avatar{width:60px;height:60px}}
-    @media(max-width:560px){.filters{grid-template-columns:1fr}.filters .search-field{grid-column:auto}.lawyer-row{grid-template-columns:1fr}.avatar{width:58px;height:58px}.lawyer-row>.btn{grid-column:auto;width:100%}}
+    .search-layout{max-width:940px}.filters{padding:14px;display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;box-shadow:none}.search-field{position:relative}.search-field span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#7b8795}.search-field input{padding-left:34px}.result-head{display:flex;justify-content:space-between;align-items:center;margin:26px 2px 12px;color:#687487;font-size:.9rem}.result-head strong{color:#0d2740}.result-head button{border:0;background:none;color:#8c652f;font-weight:800;cursor:pointer}.list{display:grid;gap:12px}.lawyer-row{display:grid;grid-template-columns:76px 1fr auto;gap:18px;align-items:center;padding:16px 18px;box-shadow:none}.row-actions{display:flex;align-items:center;gap:8px}.heart{width:40px;height:40px;border:1px solid #d2d8de;background:#fff;border-radius:8px;color:#0d2740;font-size:1.2rem;cursor:pointer}.heart.saved{background:#f7eee3;border-color:#dfc397;color:#9b682c}.avatar{width:70px;height:70px;border-radius:10px;background:linear-gradient(145deg,#e5e9ee,#f3f5f7);display:grid;place-items:center;color:#0d2740;font-weight:800;font-size:1.05rem}.body h3{margin:0 0 5px;color:#0d2740;font-size:1.15rem}.specialty{color:#35536f;font-size:.86rem}.body p{color:#758092;margin:5px 0 8px;font-size:.86rem}.extras{display:flex;gap:6px;flex-wrap:wrap}.extras span{font-size:.72rem;padding:4px 7px;border-radius:999px;background:#f4efe7;color:#7a5a2d}.empty{padding:30px;text-align:center;color:#687487}.demo-note{text-align:center;color:#8993a0;font-size:.78rem;margin-top:18px}
+    @media(max-width:820px){.filters{grid-template-columns:1fr 1fr}.filters .search-field{grid-column:1/-1}.lawyer-row{grid-template-columns:64px 1fr}.row-actions{grid-column:1/-1}.row-actions .btn{flex:1}.avatar{width:60px;height:60px}}
+    @media(max-width:560px){.filters{grid-template-columns:1fr}.filters .search-field{grid-column:auto}.lawyer-row{grid-template-columns:1fr}.avatar{width:58px;height:58px}.row-actions{grid-column:auto}.row-actions .btn{width:100%}}
   `]
 })
 export class AdvogadosComponent {
@@ -51,7 +54,7 @@ export class AdvogadosComponent {
   readonly areas=['Direito do Consumidor','Direito de Família','Direito Trabalhista','Direito Previdenciário','Direito Penal','Direito Civil','Direito Empresarial'];
   readonly cidades=['Salvador','Lauro de Freitas','Camaçari','Simões Filho','Feira de Santana'];
   advogados:Advogado[];
-  constructor(service:AdvogadoService, route:ActivatedRoute){
+  constructor(service:AdvogadoService, route:ActivatedRoute, public auth:AuthService, private favoritos:FavoritoService){
     this.advogados=service.getAll();
     this.area=route.snapshot.queryParamMap.get('area') || '';
   }
@@ -63,5 +66,8 @@ export class AdvogadosComponent {
       (!q||a.nome.toLowerCase().includes(q)||a.cidade.toLowerCase().includes(q)||a.especialidade.toLowerCase().includes(q))
     );
   }
+  isFavorite(id:number):boolean{const u=this.auth.currentUser();return !!(u && u.tipo==='cliente' && this.favoritos.isFavorite(u.email,id));}
+  toggleFavorite(id:number){const u=this.auth.currentUser();if(u && u.tipo==='cliente') this.favoritos.toggle(u.email,id);}
   limpar(){this.busca='';this.area='';this.cidade='';}
 }
+

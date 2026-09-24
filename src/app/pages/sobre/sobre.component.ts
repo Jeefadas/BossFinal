@@ -17,7 +17,7 @@ import { RouterLink } from '@angular/router';
 
   <section class="section"><div class="container story-grid">
     <div><h2 class="section-title">Quem somos</h2></div>
-    <div class="copy"><p>Encontrar um profissional jurídico pode ser difícil quando não sabemos qual área procurar ou onde começar. O JusAcesso organiza essa busca para tornar o primeiro passo mais simples.</p><p>A plataforma reúne perfis profissionais com especialidades, qualificações, localização e formas de atendimento. Assim, o usuário consegue conhecer melhor cada perfil antes de decidir entrar em contato.</p></div>
+    <div class="copy"><p>Encontrar um profissional jurídico pode ser difícil quando não sabemos qual área procurar ou onde começar. O JusAcesso organiza essa busca para tornar o primeiro passo mais simples.</p><p>A plataforma reúne perfis profissionais com especialidades, qualificações, localização e formas de atendimento. O usuário pode salvar perfis, conversar pelo chat e solicitar um horário de atendimento diretamente pelo JusAcesso.</p></div>
   </div></section>
 
   <section class="section soft"><div class="container">
@@ -34,7 +34,7 @@ import { RouterLink } from '@angular/router';
     <div class="steps">
       <div><b>1</b><span><strong>Pesquise</strong><small>Escolha uma área ou cidade.</small></span></div>
       <div><b>2</b><span><strong>Compare perfis</strong><small>Veja qualificações e modalidades de atendimento.</small></span></div>
-      <div><b>3</b><span><strong>Entre em contato</strong><small>Use os canais informados pelo profissional.</small></span></div>
+      <div><b>3</b><span><strong>Converse e agende</strong><small>Use o chat e envie uma solicitação de atendimento.</small></span></div>
     </div>
   </div></section>`,
   styles:[`

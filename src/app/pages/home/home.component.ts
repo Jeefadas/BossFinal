@@ -29,8 +29,8 @@ import { Advogado } from '../../models/advogado.model';
     <div class="container benefits">
       <div><span>⌕</span><strong>Busca por especialidade</strong></div>
       <div><span>◇</span><strong>Perfis organizados</strong></div>
-      <div><span>☷</span><strong>Informação acessível</strong></div>
-      <div><span>♡</span><strong>Apoio à cidadania</strong></div>
+      <div><span>💬</span><strong>Chat pela plataforma</strong></div>
+      <div><span>📅</span><strong>Solicite atendimento</strong></div>
     </div>
   </section>
 
