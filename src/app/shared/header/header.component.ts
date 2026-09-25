@@ -22,15 +22,15 @@ import { NotificacaoService } from '../../core/services/notificacao.service';
         @if(auth.isLoggedIn()) {
           <span class="nav-separator"></span>
           <a routerLink="/mensagens" routerLinkActive="active" class="utility-link" (click)="open=false">
-            <span class="utility-icon">💬</span><span class="mobile-label">Mensagens</span>
+            <span class="utility-icon">✉</span><span class="mobile-label">Mensagens</span>
             @if(unreadMessages){<b class="badge">{{unreadMessages}}</b>}
           </a>
-          <a routerLink="/agendamentos" routerLinkActive="active" class="utility-link" (click)="open=false"><span class="utility-icon">📅</span><span class="mobile-label">Agendamentos</span></a>
+          <a routerLink="/agendamentos" routerLinkActive="active" class="utility-link" (click)="open=false"><span class="utility-icon">☑</span><span class="mobile-label">Agendamentos</span></a>
           @if(!auth.isAdvogado()) {
             <a routerLink="/favoritos" routerLinkActive="active" class="utility-link" (click)="open=false"><span class="utility-icon">♡</span><span class="mobile-label">Favoritos</span></a>
           }
           <a routerLink="/notificacoes" routerLinkActive="active" class="utility-link" (click)="open=false">
-            <span class="utility-icon">🔔</span><span class="mobile-label">Notificações</span>
+            <span class="utility-icon">☐</span><span class="mobile-label">Notificações</span>
             @if(unreadNotifications){<b class="badge">{{unreadNotifications}}</b>}
           </a>
           @if(auth.isAdvogado()) {

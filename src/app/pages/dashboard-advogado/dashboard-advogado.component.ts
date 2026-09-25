@@ -27,11 +27,11 @@ import { ConversaResumo } from '../../models/mensagem.model';
         <nav class="side-nav">
           <button [class.active]="secao==='geral'" (click)="secao='geral'">▦ <span>Painel</span></button>
           <button [class.active]="secao==='perfil'" (click)="secao='perfil'">♙ <span>Meu perfil</span></button>
-          <a routerLink="/mensagens">💬 <span>Mensagens</span><b *ngIf="naoLidasMensagens">{{naoLidasMensagens}}</b></a>
-          <a routerLink="/agendamentos">📅 <span>Agendamentos</span><b *ngIf="pendentes">{{pendentes}}</b></a>
-          <a routerLink="/notificacoes">🔔 <span>Notificações</span><b *ngIf="naoLidasNotificacoes">{{naoLidasNotificacoes}}</b></a>
-          <button [class.active]="secao==='clientes'" (click)="secao='clientes'">👥 <span>Clientes interessados</span></button>
-          <button [class.active]="secao==='contato'" (click)="secao='contato'">☎ <span>Contato e atendimento</span></button>
+          <a routerLink="/mensagens">• <span>Mensagens</span><b *ngIf="naoLidasMensagens">{{naoLidasMensagens}}</b></a>
+          <a routerLink="/agendamentos">• <span>Agendamentos</span><b *ngIf="pendentes">{{pendentes}}</b></a>
+          <a routerLink="/notificacoes">• <span>Notificações</span><b *ngIf="naoLidasNotificacoes">{{naoLidasNotificacoes}}</b></a>
+          <button [class.active]="secao==='clientes'" (click)="secao='clientes'">• <span>Clientes interessados</span></button>
+          <button [class.active]="secao==='contato'" (click)="secao='contato'">• <span>Contato e atendimento</span></button>
         </nav>
         <a class="public-link" [routerLink]="['/advogado', perfil.id]">↗ Visualizar perfil público</a>
       </aside>
